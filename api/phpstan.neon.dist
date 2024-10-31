@@ -1,0 +1,12 @@
+includes:
+    - vendor/phpstan/phpstan/conf/bleedingEdge.neon
+
+parameters:
+    level: 7
+    dynamicConstantNames:
+        - LARAVEL_VERSION
+    phpVersion: 80200
+    reportUnmatchedIgnoredErrors: false
+
+
+
