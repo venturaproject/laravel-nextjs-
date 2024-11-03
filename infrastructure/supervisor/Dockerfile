@@ -23,7 +23,7 @@ RUN mkdir -p /var/log/supervisor
 RUN mkdir -p /var/www/storage/logs && chown -R www-data:www-data /var/www/storage/logs
 
 # Copy Supervisor configuration file
-COPY ./infraestructure/supervisor/supervisord.conf /etc/supervisor/supervisord.conf
+COPY ./infrastructure/supervisor/supervisord.conf /etc/supervisor/supervisord.conf
 
 # Set the working directory
 WORKDIR /var/www
