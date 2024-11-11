@@ -14,6 +14,9 @@ run:
 	@docker-compose -f docker-compose.yml build --no-cache
 	@docker-compose -f docker-compose.yml -p $(PROJECT_REFERENCE) up -d
 
+down:
+	@docker-compose down --remove-orphans
+
 app-container:
 	@docker exec -it $(APP_CONTAINER) bash
 

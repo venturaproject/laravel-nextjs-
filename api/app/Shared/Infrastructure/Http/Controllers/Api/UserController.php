@@ -29,7 +29,6 @@ class UserController extends Controller
     protected CommandBus $commandBus;
     protected QueryBus $queryBus;
 
-    // Constructor to initialize CommandBus and QueryBus
     public function __construct(CommandBus $commandBus, QueryBus $queryBus)
     {
         $this->commandBus = $commandBus;
@@ -74,7 +73,6 @@ class UserController extends Controller
     }
     
 
-    // Get user by ID
     public function show(int $id): JsonResponse
     {
         $query = new GetUserById($id);

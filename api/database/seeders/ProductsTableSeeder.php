@@ -6,29 +6,35 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Products\Domain\Model\Product;
-use Faker\Factory as Faker;
+use Illuminate\Support\Facades\Http;
 
 class ProductsTableSeeder extends Seeder
 {
+    private const API_URL = 'https://dummyjson.com/products';
+    private const DEFAULT_PRODUCT_COUNT = 30;
+
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        // Cargar datos desde el archivo JSON
-        $jsonFilePath = database_path('data/products.json');
-        $productData = json_decode(file_get_contents($jsonFilePath), true);
+        try {
+            // Realiza la petición a la API para obtener los productos
+            $response = Http::get(self::API_URL);
+            $productsData = $response->json()['products'] ?? [];
+        } catch (\Exception $e) {
+            throw new \RuntimeException('Error al conectar con la API de productos: ' . $e->getMessage());
+        }
 
-        // Crear instancia de Faker
-        $faker = Faker::create();
+        // Limita la cantidad de productos a insertar
+        $productsToCreate = array_slice($productsData, 0, self::DEFAULT_PRODUCT_COUNT);
 
-        // Iterar sobre todos los productos del archivo JSON
-        foreach ($productData as $product) {
+        foreach ($productsToCreate as $data) {
             Product::create([
-                'name' => $product['name'], 
-                'description' => $product['description'], 
-                'price' => $faker->randomFloat(2, 1, 100), 
-                'date_add' => $faker->date(),
+                'name' => $data['title'],
+                'description' => $data['description'] ?? null,
+                'price' => $data['price'],
+                'date_add' => now(),
             ]);
         }
     }
