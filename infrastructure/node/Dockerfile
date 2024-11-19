@@ -12,7 +12,6 @@ WORKDIR /var/www
 
 # Copia el package.json y el package-lock.json desde el directorio correcto
 COPY ./frontend/package.json ./
-COPY ./frontend/package-lock.json ./
 
 # Instala las dependencias
 RUN npm install
